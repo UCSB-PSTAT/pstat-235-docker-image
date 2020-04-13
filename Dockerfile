@@ -24,17 +24,20 @@ RUN export JAVA_HOME
 USER $NB_USER
 
 RUN pip install pyspark && \
-	pip install sparkmagic
+	pip install sparkmagic && \
+        jupyter nbextension enable --py --sys-prefix widgetsnbextension
 
-RUN jupyter nbextension enable --py --sys-prefix widgetsnbextension
-
+USER root
 RUN cd /opt/conda/lib/python3.7/site-packages && \
-	jupyter-kernelspec install sparkmagic/kernels/sparkkernel --user && \
-	jupyter-kernelspec install sparkmagic/kernels/pysparkkernel --user && \
-	jupyter-kernelspec install sparkmagic/kernels/sparkrkernel --user && \
-	jupyter serverextension enable --py sparkmagic && \
-	mkdir .sparkmagic
+	jupyter-kernelspec install sparkmagic/kernels/sparkkernel && \
+	jupyter-kernelspec install sparkmagic/kernels/pysparkkernel && \
+	jupyter-kernelspec install sparkmagic/kernels/sparkrkernel && \
+	jupyter serverextension enable --py --sys-prefix sparkmagic
 
-ADD config.json /opt/conda/lib/python3.7/site-packages/.sparkmagic/config.json
+USER $NB_USER
+
+RUN mkdir ~/.sparkmagic
+
+ADD config.json ~/.sparkmagic/config.json
 
 RUN R -e "install.packages(c('biglm'), repos = 'http://cran.us.r-project.org')"
