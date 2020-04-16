@@ -1,4 +1,4 @@
-FROM dddlab/python-rstudio-notebook:v20200405-b8822c1-94fdd01b492f
+FROM ucsb/ling-111:v20200116.6
  
 LABEL maintainer="Patrick Windmiller <windmiller@pstat.ucsb.edu>"
 
@@ -28,6 +28,7 @@ RUN pip install pyspark && \
         jupyter nbextension enable --py --sys-prefix widgetsnbextension
 
 USER root
+
 RUN cd /opt/conda/lib/python3.7/site-packages && \
 	jupyter-kernelspec install sparkmagic/kernels/sparkkernel && \
 	jupyter-kernelspec install sparkmagic/kernels/pysparkkernel && \
@@ -36,8 +37,10 @@ RUN cd /opt/conda/lib/python3.7/site-packages && \
 
 USER $NB_USER
 
-RUN mkdir ~/.sparkmagic
+RUN mkdir /home/jovyan/.sparkmagic
 
-ADD config.json ~/.sparkmagic/config.json
+ADD config.json /home/jovyan/.sparkmagic/config.json
 
-RUN R -e "install.packages(c('biglm'), repos = 'http://cran.us.r-project.org')"
+USER root
+
+RUN fix-permissions /home/$NB_USER
