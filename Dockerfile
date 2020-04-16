@@ -37,10 +37,11 @@ RUN cd /opt/conda/lib/python3.7/site-packages && \
 
 USER $NB_USER
 
-RUN mkdir /home/jovyan/.sparkmagic
+RUN mkdir /opt/conda/lib/python3.7/site-packages/.sparkmagic
 
-ADD config.json /home/jovyan/.sparkmagic/config.json
+ADD config.json /opt/conda/lib/python3.7/site-packages/.sparkmagic/config.json
 
 USER root
 
-RUN fix-permissions /home/$NB_USER
+RUN fix-permissions $CONDA_DIR && \
+	fix-permissions /home/$NB_USER
