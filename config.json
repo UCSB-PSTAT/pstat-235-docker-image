@@ -2,20 +2,20 @@
   "kernel_python_credentials" : {
     "username": "",
     "password": "",
-    "url": "http://10.138.0.21:8998",
+    "url": $LIVY_IP,
     "auth": "None"
   },
 
   "kernel_scala_credentials" : {
     "username": "",
     "password": "",
-    "url": "http://10.138.0.21:8998",
+    "url": $LIVY_IP,
     "auth": "None"
   },
   "kernel_r_credentials": {
     "username": "",
     "password": "",
-    "url": "http://10.138.0.21:8998"
+    "url": $LIVY_IP
   },
 
   "logging_config": {
