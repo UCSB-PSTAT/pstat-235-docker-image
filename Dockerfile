@@ -23,6 +23,8 @@ RUN export JAVA_HOME
 
 USER $NB_USER
 
+RUN pip install requests requests_oauthlib
+
 RUN pip install pyspark && \
 	pip install sparkmagic && \
         jupyter nbextension enable --py --sys-prefix widgetsnbextension
